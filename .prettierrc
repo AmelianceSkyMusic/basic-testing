@@ -6,13 +6,7 @@
 	"semi": true,
 	"overrides": [
 		{
-			"files": [
-				"**/*.html",
-				"**/*.css",
-				"**/*.scss",
-				"**/*.json",
-				"**/*.md"
-			],
+			"files": ["**/*.html", "**/*.css", "**/*.scss", "**/*.json", "**/*.md"],
 			"options": {
 				"singleQuote": false
 			}
