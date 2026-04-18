@@ -1,5 +1,11 @@
 import { random } from 'lodash';
-import { BankAccount, getBankAccount, InsufficientFundsError, SynchronizationFailedError } from '.';
+import {
+	BankAccount,
+	getBankAccount,
+	InsufficientFundsError,
+	SynchronizationFailedError,
+	TransferFailedError,
+} from '.';
 
 jest.mock('lodash', () => ({
 	random: jest.fn(),
@@ -23,11 +29,11 @@ describe('BankAccount', () => {
 	});
 
 	test('should throw error when transferring more than balance', () => {
-		expect(() => bankAccount.transfer(999, otherBankAccount)).toThrow(Error);
+		expect(() => bankAccount.transfer(999, otherBankAccount)).toThrow(InsufficientFundsError);
 	});
 
 	test('should throw error when transferring to the same account', () => {
-		expect(() => bankAccount.transfer(999, bankAccount)).toThrow(Error);
+		expect(() => bankAccount.transfer(999, bankAccount)).toThrow(TransferFailedError);
 	});
 
 	test('should deposit money', () => {
