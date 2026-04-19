@@ -1,78 +1,78 @@
 import { random } from 'lodash';
 
 export class BankAccount {
-  private _balance: number;
+	private _balance: number;
 
-  constructor(initialBalance: number) {
-    this._balance = initialBalance;
-  }
+	constructor(initialBalance: number) {
+		this._balance = initialBalance;
+	}
 
-  public getBalance() {
-    return this._balance;
-  }
+	public getBalance() {
+		return this._balance;
+	}
 
-  public deposit(amount: number): this {
-    this._balance += amount;
+	public deposit(amount: number): this {
+		this._balance += amount;
 
-    return this;
-  }
+		return this;
+	}
 
-  public withdraw(amount: number): this {
-    if (amount > this._balance) {
-      throw new InsufficientFundsError(this._balance);
-    }
-    this._balance -= amount;
+	public withdraw(amount: number): this {
+		if (amount > this._balance) {
+			throw new InsufficientFundsError(this._balance);
+		}
+		this._balance -= amount;
 
-    return this;
-  }
+		return this;
+	}
 
-  public transfer(amount: number, toAccount: BankAccount): this {
-    if (this === toAccount) {
-      throw new TransferFailedError();
-    }
+	public transfer(amount: number, toAccount: BankAccount): this {
+		if (this === toAccount) {
+			throw new TransferFailedError();
+		}
 
-    this.withdraw(amount);
-    toAccount.deposit(amount);
+		this.withdraw(amount);
+		toAccount.deposit(amount);
 
-    return this;
-  }
+		return this;
+	}
 
-  public async fetchBalance(): Promise<number | null> {
-    const balance = random(0, 100, false);
+	public async fetchBalance(): Promise<number | null> {
+		const balance = random(0, 100, false);
 
-    const requestFailed = random(0, 1, false) === 0;
+		const requestFailed = random(0, 1, false) === 0;
 
-    return requestFailed ? null : balance;
-  }
+		return requestFailed ? null : balance;
+	}
 
-  public async synchronizeBalance() {
-    const balance = await this.fetchBalance();
-    if (balance === null) {
-      throw new SynchronizationFailedError();
-    }
+	public async synchronizeBalance() {
+		const balance = await this.fetchBalance();
+		if (balance === null) {
+			throw new SynchronizationFailedError();
+		}
 
-    this._balance = balance;
-  }
+		this._balance = balance;
+	}
 }
 
 export const getBankAccount = (initialBalance: number): BankAccount => {
-  return new BankAccount(initialBalance);
+	return new BankAccount(initialBalance);
 };
 
 export class TransferFailedError extends Error {
-  constructor() {
-    super('Transfer failed');
-  }
+	constructor() {
+		super('Transfer failed');
+	}
 }
 
 export class SynchronizationFailedError extends Error {
-  constructor() {
-    super('Synchronization failed');
-  }
+	constructor() {
+		super('Synchronization failed');
+	}
 }
 
 export class InsufficientFundsError extends Error {
-  constructor(balance: number) {
-    super(`Insufficient funds: cannot withdraw more than ${balance}`);
-  }
+	constructor(balance: number) {
+		super(`Insufficient funds: cannot withdraw more than ${balance}`);
+	}
 }

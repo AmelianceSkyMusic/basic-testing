@@ -128,3 +128,20 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# temp folders / files
+*._backup*
+*._legacy*
+*._temp*
+*._labs*
+*._dev*
+.file-status/
+.eslintcache
+
+#history
+.history/
+.lh/
+
+.ameliance*.sh
+
+.agents
